@@ -35,7 +35,10 @@ int swapElements(int *addr1, int *addr2)
 
 void display_array(int arr[], int length)
 {
-    if (length == 0 ){printf("This heap is empty");}
+    if (length == 0)
+    {
+        printf("This heap is empty");
+    }
     for (int i = 0; i < length; i++)
     {
         printf("%d, ", arr[i]);
@@ -97,12 +100,29 @@ void addItem(int newItem, heap *p)
     Heapify(p->data, p->next);
 }
 
-// typedef struct heap
-// {
-//     int data[10];
-//     int max;
-//     int last;
-// }heap;
+int deleteMax(heap *p)
+{
+    if (p->next == 0)
+    {
+        printf("Heap is empty");
+        return -1;
+    }
+    int temp = p->data[0];
+    p->data[0] = 0;
+    // p->next --;
+    Heapify(p->data, p->next);
+    return temp;
+}
+
+int heapSort(heap *p)
+{
+    int arr[p->max];
+    for (int i = 0; i < p->max; i++)
+    {
+        arr[i] = deleteMax(p);
+    }
+    display_array(arr, p->max);
+}
 
 void main(void)
 {
@@ -117,16 +137,20 @@ void main(void)
     for (int i = 0; i < 7; i++)
     {
         addItem(array[i], p);
+        printf("added %d\n", array[i]);
     }
 
-    display_array(p->data, p->next);
+    addItem(89, p);
+    addItem(89, p);
+    addItem(89, p);
 
-    addItem(89,p);
-
-    display_array(p->data, p->next);
-
-    Heapify(p->data, p->next);
+    heapSort(p);
 
     display_array(p->data, p->next);
 
+    // display_array(p->data, p->next);
+
+    // Heapify(p->data, p->next);
+    // deleteMax(p);
+    // display_array(p->data, p->next);
 }
